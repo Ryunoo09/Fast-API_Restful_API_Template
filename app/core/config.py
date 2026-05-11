@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: List[str] = ["*"]
 
     # Database (MySQL)
+    DB_CONNECTION: str = "mysql"
     DB_HOST: str = "localhost"
     DB_PORT: int = 3306
     DB_USERNAME: str = "root"
@@ -25,7 +26,9 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        """Construct MySQL connection string from individual parameters."""
+        """Construct database connection string."""
+        if self.DB_CONNECTION == "sqlite":
+            return f"sqlite:///{self.DB_NAME}"
         return (
             f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}"
             f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"

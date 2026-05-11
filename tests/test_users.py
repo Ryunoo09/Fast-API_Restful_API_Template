@@ -9,15 +9,16 @@ class TestUserEndpoints:
         response = client.post(
             "/api/v1/users/",
             json={
-                "username": "testuser",
+                "name": "Test User",
                 "email": "test@example.com",
                 "password": "testpassword123",
-                "full_name": "Test User",
             },
         )
+        if response.status_code == 500:
+            print("ERROR RESPONSE:", response.json())
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
-        assert data["username"] == "testuser"
+        assert data["name"] == "Test User"
         assert data["email"] == "test@example.com"
         assert "password" not in data
 

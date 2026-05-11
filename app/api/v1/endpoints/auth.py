@@ -90,7 +90,7 @@ def register(
 # Chapter 7 equivalent: AuthController@login → onAuthorized($token)
 # =========================================================================
 @router.post("/login", response_model=TokenResponse)
-@limiter.limit("20/minute")
+@limiter.limit("5/minute")
 def login_access_token(
     request: Request,
     db: Session = Depends(get_db),
@@ -110,11 +110,11 @@ def login_access_token(
         )
 
     access_token = create_access_token(
-        data={"sub": str(user.id)},
+        data={"sub": str(user.id), "email": user.email},
         expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
     )
     refresh_token = create_refresh_token(
-        data={"sub": str(user.id)},
+        data={"sub": str(user.id), "email": user.email},
         expires_delta=timedelta(minutes=settings.REFRESH_TOKEN_EXPIRE_MINUTES),
     )
 
