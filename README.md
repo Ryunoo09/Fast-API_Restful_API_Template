@@ -15,6 +15,7 @@ Proyek FastAPI dengan pola **Clean Architecture** yang mengimplementasikan konse
 
 ## 📁 Struktur Folder
 
+```text
 fastapi_python/
 ├── app/
 │   ├── main.py                  # Entry point & SlowAPI middleware setup
