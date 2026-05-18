@@ -123,12 +123,29 @@ Proyek ini mengimplementasikan sistem **Automated Testing** menggunakan **Pytest
 # Pastikan virtual environment sudah aktif
 .\venv\Scripts\activate
 
-# Jalankan semua test sekaligus
+# 1. Jalankan semua test sekaligus (Standard Verbose)
 pytest tests/ -v
 
-# Jalankan test pada file tertentu saja
+# 2. Jalankan test pada file tertentu saja
 pytest tests/test_posts.py -v
+
+# 3. Jalankan test dengan LOG LENGKAP & PRINT LIVE (Tanpa capture stdout)
+pytest tests/ -v -s
+
+# 4. Jalankan test dengan LIVE LOGGING CLI dari FastAPI (Menampilkan log level INFO ke terminal)
+pytest tests/ -v -o log_cli=true --log-cli-level=INFO
+
+# 5. Jalankan test dan simpan SELURUH LOG LENGKAP ke dalam berkas file log
+pytest tests/ -v --log-file=test_output.log --log-file-level=DEBUG
 ```
+
+### 📋 Detail Opsi Pengujian & Logging
+
+Untuk membantu proses pelacakan bug atau pemeriksaan alur request (*debugging*), Anda dapat memanfaatkan fitur perekaman log dari Pytest dengan opsi berikut:
+
+* **Opsi `-s` atau `--capture=no`**: Secara *default*, Pytest akan menahan semua *output* standar seperti `print()` atau pesan logger yang dihasilkan selama pengujian. Dengan menambahkan opsi `-s`, semua pesan log dan perintah cetak (`print()`) akan langsung ditampilkan di terminal secara *real-time* sewaktu test berjalan.
+* **Opsi `-o log_cli=true --log-cli-level=INFO`**: Opsi ini akan memaksa Pytest mengaktifkan fitur CLI Logging. Semua log aplikasi FastAPI (seperti log koneksi database SQLAlchemy, auth event, router access, dll.) dengan tingkatan level `INFO` ke atas akan dicetak langsung ke konsol terminal.
+* **Opsi `--log-file=test_output.log --log-file-level=DEBUG`**: Berfungsi untuk mengekspor seluruh aktivitas log pengujian secara komprehensif ke dalam berkas log eksternal bernama `test_output.log`. Tingkatan level diatur ke `DEBUG` agar Anda mendapatkan rincian informasi terdalam dari sistem untuk keperluan *troubleshooting*.
 
 ### Skenario Pengujian yang Diimplementasikan
 
