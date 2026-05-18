@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from enum import Enum
 
@@ -41,8 +41,7 @@ class PostResponse(BaseModel):
     content: str
     user_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PostCreateResponse(BaseModel):
@@ -54,8 +53,7 @@ class PostCreateResponse(BaseModel):
     user_id: int
     link: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PostDeleteResponse(BaseModel):

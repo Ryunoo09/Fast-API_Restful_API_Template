@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import SQLAlchemyError
@@ -15,11 +16,22 @@ from app.utils.exceptions import (
     validation_exception_handler,
 )
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Initialize database tables on application startup.
+    Creates all tables if they don't exist yet.
+    """
+    init_db()
+    yield
+
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description=settings.PROJECT_DESCRIPTION,
     version=settings.VERSION,
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan,
 )
 
 # Rate Limiter State (Chapter 7 concept: api.throttle)
@@ -37,15 +49,6 @@ app.add_middleware(
 
 # Include API router
 app.include_router(api_router, prefix=settings.API_V1_STR)
-
-
-@app.on_event("startup")
-async def startup_event():
-    """
-    Initialize database tables on application startup.
-    Creates all tables if they don't exist yet.
-    """
-    init_db()
 
 
 # =========================================================================
