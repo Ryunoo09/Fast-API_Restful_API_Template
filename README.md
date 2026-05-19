@@ -157,9 +157,12 @@ Untuk membantu proses pelacakan bug atau pemeriksaan alur request (*debugging*),
 | 4 | Buat post dengan token JWT yang valid | `test_posts.py` | 201 Created |
 | 5 | User A mencoba edit post milik User B | `test_posts.py` | 403 Forbidden |
 | 6 | Akses post dengan ID yang tidak ada | `test_posts.py` | 404 Not Found |
-| 7 | Registrasi user baru | `test_users.py` | 201 Created |
-| 8 | Ambil daftar semua user | `test_users.py` | 200 OK |
-| 9 | Ambil user dengan ID yang tidak ada | `test_users.py` | 404 Not Found |
+| 7 | Menampilkan list post milik user yang login saja | `test_posts.py` | 200 OK |
+| 8 | Menampilkan detail post milik sendiri berdasarkan ID | `test_posts.py` | 200 OK |
+| 9 | User A mencoba melihat detail post milik User B | `test_posts.py` | 403 Forbidden |
+| 10 | Registrasi user baru | `test_users.py` | 201 Created |
+| 11 | Ambil daftar semua user | `test_users.py` | 200 OK |
+| 12 | Ambil user dengan ID yang tidak ada | `test_users.py` | 404 Not Found |
 
 ### Infrastruktur Testing
 
