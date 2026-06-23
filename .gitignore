@@ -29,3 +29,11 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+
+# Logs and output files
+*.log
+report.*
+temp.txt
+.pytest_cache/
+.coverage
+htmlcov/
